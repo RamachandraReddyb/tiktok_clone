@@ -10,11 +10,17 @@ import { client } from "../utils/client";
 import { topics } from "../utils/constants";
 
 const Upload = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [videoAsset, setVideoAsset] = useState<
     SanityAssetDocument | undefined
   >();
   const [wrongFile, setWrongFile] = useState(false);
+  const [caption, setCaption] = useState("");
+  const [category, setCategory] = useState(topics[0].name);
+  const [savingPost, setSavingPost] = useState(false);
+
+  const { userProfile }: { userProfile: any } = useAuthStore();
 
   const uploadVideo = async (e: any) => {
     const selectedFile = e.target.files[0];
@@ -35,6 +41,32 @@ const Upload = () => {
     }
   };
 
+  const handlePost = async () => {
+    if (caption && videoAsset?._id && category) {
+      setSavingPost(true);
+      const document = {
+        _type: "post",
+        caption,
+        video: {
+          _type: "file",
+          asset: {
+            _type: "reference",
+            _ref: videoAsset?._id,
+          },
+        },
+        userId: userProfile?._id,
+        postedBy: {
+          _type: "postedBy",
+          _ref: userProfile?._id,
+        },
+        topic: category,
+      };
+
+      await axios.post("http://localhost:3000/api/post", document);
+      router.push("/");
+    }
+  };
+
   return (
     <div className="flex w-full h-full absolute left-0 top-[60px] mb-10 pt-10 lg:pt-20 bg-[#F8F8F8] justify-center">
       <div className="bg-white w-[60%] rounded-lg xl:h-[80vh] flex gap-6 flex-wrap justify-between items-center p-14 pt-6">
@@ -47,7 +79,7 @@ const Upload = () => {
           </div>
           <div className="border-dashed roundex-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 w-[260px] h-[460px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100">
             {isLoading ? (
-              <p>uploading</p>
+              <p>uploading...</p>
             ) : videoAsset ? (
               <div>
                 <video
@@ -58,15 +90,15 @@ const Upload = () => {
                 ></video>
               </div>
             ) : (
-              <label htmlFor="" className="cursor-pointer">
+              <label htmlFor="upload-video" className="cursor-pointer">
                 <div className="flex flex-col items-center justify-center h-full">
                   <div className="flex flex-col items-center justify-center">
                     <p className="font-bold text-xl">
                       <FaCloudUploadAlt className="text-gray-300 text-6xl" />
-                      <p className="text-xl font-semibold">Video to upload</p>
                     </p>
+                    <p className="text-xl font-semibold">Video to upload</p>
                   </div>
-                  <p className="text-gray-400 text-center mt-10 text-small leading-10">
+                  <p className="text-gray-400 text-center mt-10 text-sm leading-10">
                     MP4 or webm or ogg <br />
                     720*1280 or higher <br />
                     up to 10 Minutes
@@ -78,9 +110,10 @@ const Upload = () => {
                   </p>
                 </div>
                 <input
-                  type={"file"}
+                  type="file"
                   name="upload-video"
-                  className="w-0 h-0"
+                  id="upload-video"
+                  className="w-0 h-0 "
                   onChange={uploadVideo}
                 />
               </label>
@@ -98,13 +131,15 @@ const Upload = () => {
           </label>
           <input
             type="text"
-            value={""}
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
             className="rounded outline-none text-md border-2 border-gray-200 p-2"
           />
           <label htmlFor="" className="text-md font-medium">
             Choose a Category
           </label>
           <select
+            onChange={(e) => setCategory(e.target.value)}
             name=""
             id=""
             className={
@@ -129,6 +164,7 @@ const Upload = () => {
               Discard
             </button>
             <button
+              onClick={handlePost}
               type="button"
               className="bg-[#F51997] text-white text-md border-2 rounded font-medium p-2 w-20 lg:w-44 outline-none"
             >
