@@ -53,7 +53,7 @@ const Navbar = () => {
           />
           <button
             onClick={handleSearch}
-            className="absolute md:right-5 right-6 top-4 border-left-2 border-gray-300 pl-4 text-2xl text-gray-400"
+            className="absolute md:right-5 right-6 top-[10px] border-left-2 border-gray-300 pl-4 text-2xl text-gray-400"
           >
             <BiSearch />
           </button>
