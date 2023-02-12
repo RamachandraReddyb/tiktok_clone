@@ -38,10 +38,10 @@ const Navbar = () => {
         </div>
       </Link>
 
-      <div className="position-relative">
+      <div className="relative">
         <form
           action=""
-          className="position-relative hidden md:block absolute md:static top-10 -left-20 bg-white"
+          className="relative hidden md:block absolute md:static top-10 -left-20 bg-white"
           onSubmit={handleSearch}
         >
           <input
@@ -53,7 +53,7 @@ const Navbar = () => {
           />
           <button
             onClick={handleSearch}
-            className="position-absolute md:right-5 right-6 top-4 border-left-2 border-gray-300 pl-4 text-2xl text-gray-400"
+            className="absolute md:right-5 right-6 top-4 border-left-2 border-gray-300 pl-4 text-2xl text-gray-400"
           >
             <BiSearch />
           </button>
