@@ -41,7 +41,7 @@ const Navbar = () => {
       <div className="position-relative">
         <form
           action=""
-          className="relative hidden md:block absolute md:static top-10 -left-20 bg-white"
+          className="position-relative hidden md:block absolute md:static top-10 -left-20 bg-white"
           onSubmit={handleSearch}
         >
           <input
