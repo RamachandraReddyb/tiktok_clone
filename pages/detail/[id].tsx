@@ -75,12 +75,12 @@ const Detail = ({ postDetails }: IProps) => {
   if (!post) return null;
 
   return (
-    <div className="flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
+    <div className="flex w-full position-absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
       <div
         className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center
       bg-black"
       >
-        <div className="absolute top-6 left-2 lg:left-6 flex gap-6 z-50">
+        <div className="position-absolute top-6 left-2 lg:left-6 flex gap-6 z-50">
           <p className="cursor-pointer" onClick={() => router.back()}>
             <MdOutlineCancel className="text-white text-[35px]" />
           </p>
@@ -95,7 +95,7 @@ const Detail = ({ postDetails }: IProps) => {
               onClick={onVideoClick}
             ></video>
           </div>
-          <div className="absolute top-[45%] left-[45%] cursor-pointer">
+          <div className="position-absolute top-[45%] left-[45%] cursor-pointer">
             {!playing && (
               <button onClick={onVideoClick}>
                 <BsFillPlayFill className="text-white text-6xl lg:text-8xl" />
@@ -103,7 +103,7 @@ const Detail = ({ postDetails }: IProps) => {
             )}
           </div>
         </div>
-        <div className="absolute bottom-5 lg:bottom-10 right-5 lg:right-10 cursor-pointer">
+        <div className="position-absolute bottom-5 lg:bottom-10 right-5 lg:right-10 cursor-pointer">
           {isVideoMuted ? (
             <button onClick={() => setIsVideoMuted(true)}>
               <HiVolumeOff className="text-white text-2xl lg:text-4xl" />
