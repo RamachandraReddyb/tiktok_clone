@@ -8,9 +8,11 @@ import { ImCancelCircle } from "react-icons/im";
 import Discover from "./Discover";
 import SuggestedAccounts from "./SuggestedAccounts";
 import Footer from "./Footer";
+import useAuthStore from "../store/authStore";
 
 const Sidebar = () => {
   const [showSideBar, setShowSideBar] = useState(true);
+  const { fetchAllUsers, allUsers }: any = useAuthStore();
 
   const userProfile = false;
 
@@ -63,7 +65,10 @@ const Sidebar = () => {
             </div>
           )} */}
           <Discover />
-          <SuggestedAccounts />
+          <SuggestedAccounts
+            fetchAllUsers={fetchAllUsers}
+            allUsers={allUsers}
+          />
           <Footer />
         </div>
       )}
